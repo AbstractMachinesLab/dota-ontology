@@ -1,0 +1,4 @@
+*.ttl linguist-language=Turtle
+
+.vimrc linguist-vendored
+docs/* linguist-vendored
