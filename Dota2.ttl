@@ -15,22 +15,30 @@
 #    Object Properties
 #################################################################
 
+###  https://abstractmachines.dev/wittgenstein/Dota2#DotaObjectProperty
+:DotaObjectProperty rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf owl:topObjectProperty ;
+                    rdfs:comment "The Top Object Property that all properties in the Dota ontology must subclass."@en ;
+                    rdfs:label "Dota Object Property"@en .
+
+
 ###  https://abstractmachines.dev/wittgenstein/Dota2#castingType
 :castingType rdf:type owl:ObjectProperty ;
-             rdfs:subPropertyOf owl:topObjectProperty ;
+             rdfs:subPropertyOf :DotaObjectProperty ;
              rdfs:domain :Ability ;
              rdfs:range :CastingType .
 
 
 ###  https://abstractmachines.dev/wittgenstein/Dota2#damageType
 :damageType rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf :DotaObjectProperty ;
             rdfs:domain :Ability ;
             rdfs:range :DamageType .
 
 
 ###  https://abstractmachines.dev/wittgenstein/Dota2#targetingType
 :targetingType rdf:type owl:ObjectProperty ;
-               rdfs:subPropertyOf owl:topObjectProperty ;
+               rdfs:subPropertyOf :DotaObjectProperty ;
                rdfs:domain :Ability ;
                rdfs:range :TargetingType .
 
@@ -39,20 +47,42 @@
 #    Data properties
 #################################################################
 
+###  https://abstractmachines.dev/wittgenstein/Dota2#DotaDataProperty
+:DotaDataProperty rdf:type owl:DatatypeProperty ;
+                  rdfs:comment "The Top Data Property that all data properties in the Dota ontology must subclass."@en ;
+                  rdfs:label "Dota Data Property"@en .
+
+
 ###  https://abstractmachines.dev/wittgenstein/Dota2#castRange
 :castRange rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf :DotaDataProperty ;
            rdfs:domain :Ability ;
-           rdfs:range xsd:positiveInteger .
+           rdfs:range xsd:positiveInteger ;
+           rdfs:comment "The maximum distance at which a spell can be casted on its target."@en .
 
 
 ###  https://abstractmachines.dev/wittgenstein/Dota2#linkBreakDistance
 :linkBreakDistance rdf:type owl:DatatypeProperty ;
-                   rdfs:range xsd:positiveInteger .
+                   rdfs:subPropertyOf :DotaDataProperty ;
+                   rdfs:domain :Ability ;
+                   rdfs:range xsd:positiveInteger ;
+                   rdfs:comment "Abiliities that link units together have a limit distance between these units before the link is broken and the ability is cancelled or dispelled."@en .
 
 
 ###  https://abstractmachines.dev/wittgenstein/Dota2#maximumChannelingTime
 :maximumChannelingTime rdf:type owl:DatatypeProperty ;
-                       rdfs:range xsd:positiveInteger .
+                       rdfs:subPropertyOf :DotaDataProperty ;
+                       rdfs:domain :Ability ;
+                       rdfs:range xsd:positiveInteger ;
+                       rdfs:comment "Channeled abilities can be channeled for this maximum amount of seconds."@en .
+
+
+###  https://abstractmachines.dev/wittgenstein/Dota2#movementSpeed
+:movementSpeed rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf :DotaDataProperty ;
+               rdfs:domain :Hero ;
+               rdfs:range xsd:positiveInteger ;
+               rdfs:comment "The speed at which a unit can move."@en .
 
 
 #################################################################
@@ -66,33 +96,27 @@
 
 ###  https://abstractmachines.dev/wittgenstein/Dota2#CastingType
 :CastingType rdf:type owl:Class ;
-             owl:equivalentClass [ rdf:type owl:Class ;
-                                   owl:oneOf ( :Channeled
-                                             )
-                                 ] ;
              rdfs:subClassOf :DotaThing .
 
 
 ###  https://abstractmachines.dev/wittgenstein/Dota2#DamageType
 :DamageType rdf:type owl:Class ;
-            owl:equivalentClass [ rdf:type owl:Class ;
-                                  owl:oneOf ( :MagicalDamage
-                                            )
-                                ] ;
             rdfs:subClassOf :DotaThing .
 
 
 ###  https://abstractmachines.dev/wittgenstein/Dota2#DotaThing
 :DotaThing rdf:type owl:Class ;
-           rdfs:comment "A Thing in the Dota Ontology"@en .
+           rdfs:comment "A Thing in the Dota Ontology"@en ;
+           rdfs:label "Dota Thing"@en .
+
+
+###  https://abstractmachines.dev/wittgenstein/Dota2#Hero
+:Hero rdf:type owl:Class ;
+      rdfs:subClassOf :DotaThing .
 
 
 ###  https://abstractmachines.dev/wittgenstein/Dota2#TargetingType
 :TargetingType rdf:type owl:Class ;
-               owl:equivalentClass [ rdf:type owl:Class ;
-                                     owl:oneOf ( :UnitTarget
-                                               )
-                                   ] ;
                rdfs:subClassOf :DotaThing .
 
 
@@ -120,8 +144,7 @@ When cast on an ally, Pugna will drain his own health into his ally."""@en ;
 
 
 ###  https://abstractmachines.dev/wittgenstein/Dota2#MagicalDamage
-:MagicalDamage rdf:type owl:NamedIndividual ,
-                        :DamageType .
+:MagicalDamage rdf:type owl:NamedIndividual .
 
 
 ###  https://abstractmachines.dev/wittgenstein/Dota2#UnitTarget
