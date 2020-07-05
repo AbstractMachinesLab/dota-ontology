@@ -15,52 +15,29 @@
 #    Object Properties
 #################################################################
 
-###  https://abstractmachines.dev/wittgenstein/Dota2#abilityType
-:abilityType rdf:type owl:ObjectProperty ;
+###  https://abstractmachines.dev/wittgenstein/Dota2#castingType
+:castingType rdf:type owl:ObjectProperty ;
              rdfs:subPropertyOf owl:topObjectProperty ;
              rdfs:domain :Ability ;
-             rdfs:range :ActivationType .
+             rdfs:range :CastingType .
 
 
-###  https://abstractmachines.dev/wittgenstein/Dota2#castingType
-:castingType rdf:type owl:ObjectProperty .
-
-
-###  https://abstractmachines.dev/wittgenstein/Dota2#castingTypeChanneled
-:castingTypeChanneled rdf:type owl:ObjectProperty ;
-                      rdfs:subPropertyOf :castingType ;
-                      rdfs:domain :InstantAbility ;
-                      owl:propertyDisjointWith :castingTypeInstant .
-
-
-###  https://abstractmachines.dev/wittgenstein/Dota2#castingTypeInstant
-:castingTypeInstant rdf:type owl:ObjectProperty ;
-                    rdfs:subPropertyOf :castingType ;
-                    rdfs:domain :ChanneledAbility .
-
-
-###  https://abstractmachines.dev/wittgenstein/Dota2#mainAttribute
-:mainAttribute rdf:type owl:ObjectProperty ;
-               rdfs:subPropertyOf owl:topObjectProperty ;
-               rdfs:domain :Hero ;
-               rdfs:range :HeroMainAttribute .
+###  https://abstractmachines.dev/wittgenstein/Dota2#damageType
+:damageType rdf:type owl:ObjectProperty ;
+            rdfs:domain :Ability ;
+            rdfs:range :DamageType .
 
 
 ###  https://abstractmachines.dev/wittgenstein/Dota2#targetingType
 :targetingType rdf:type owl:ObjectProperty ;
-               rdfs:subPropertyOf owl:topObjectProperty .
+               rdfs:subPropertyOf owl:topObjectProperty ;
+               rdfs:domain :Ability ;
+               rdfs:range :TargetingType .
 
 
 #################################################################
 #    Data properties
 #################################################################
-
-###  https://abstractmachines.dev/wittgenstein/Dota2#baseMovementSpeed
-:baseMovementSpeed rdf:type owl:DatatypeProperty ;
-                   rdfs:domain :Hero ;
-                   rdfs:range xsd:positiveInteger ;
-                   rdfs:comment "The base speed of a hero."@en .
-
 
 ###  https://abstractmachines.dev/wittgenstein/Dota2#castRange
 :castRange rdf:type owl:DatatypeProperty ;
@@ -68,10 +45,14 @@
            rdfs:range xsd:positiveInteger .
 
 
-###  https://abstractmachines.dev/wittgenstein/Dota2#channelingTime
-:channelingTime rdf:type owl:DatatypeProperty ;
-                rdfs:domain :ChanneledAbility ;
-                rdfs:range xsd:nonNegativeInteger .
+###  https://abstractmachines.dev/wittgenstein/Dota2#linkBreakDistance
+:linkBreakDistance rdf:type owl:DatatypeProperty ;
+                   rdfs:range xsd:positiveInteger .
+
+
+###  https://abstractmachines.dev/wittgenstein/Dota2#maximumChannelingTime
+:maximumChannelingTime rdf:type owl:DatatypeProperty ;
+                       rdfs:range xsd:positiveInteger .
 
 
 #################################################################
@@ -83,40 +64,22 @@
          rdfs:subClassOf :DotaThing .
 
 
-###  https://abstractmachines.dev/wittgenstein/Dota2#AbilityDescriptor
-:AbilityDescriptor rdf:type owl:Class ;
-                   rdfs:subClassOf :DotaThing .
-
-
-###  https://abstractmachines.dev/wittgenstein/Dota2#ActivationType
-:ActivationType rdf:type owl:Class ;
-                owl:equivalentClass [ rdf:type owl:Class ;
-                                      owl:oneOf ( :ActiveAbility
-                                                  :AutocastAbility
-                                                  :PassiveAbility
-                                                )
-                                    ] ;
-                rdfs:subClassOf :AbilityDescriptor .
-
-
-###  https://abstractmachines.dev/wittgenstein/Dota2#AreaTarget
-:AreaTarget rdf:type owl:Class ;
-            rdfs:subClassOf :PointTarget .
-
-
 ###  https://abstractmachines.dev/wittgenstein/Dota2#CastingType
 :CastingType rdf:type owl:Class ;
              owl:equivalentClass [ rdf:type owl:Class ;
                                    owl:oneOf ( :Channeled
-                                               :Instant
                                              )
                                  ] ;
-             rdfs:subClassOf :AbilityDescriptor .
+             rdfs:subClassOf :DotaThing .
 
 
-###  https://abstractmachines.dev/wittgenstein/Dota2#ChanneledAbility
-:ChanneledAbility rdf:type owl:Class ;
-                  rdfs:subClassOf :Ability .
+###  https://abstractmachines.dev/wittgenstein/Dota2#DamageType
+:DamageType rdf:type owl:Class ;
+            owl:equivalentClass [ rdf:type owl:Class ;
+                                  owl:oneOf ( :MagicalDamage
+                                            )
+                                ] ;
+            rdfs:subClassOf :DotaThing .
 
 
 ###  https://abstractmachines.dev/wittgenstein/Dota2#DotaThing
@@ -124,153 +87,46 @@
            rdfs:comment "A Thing in the Dota Ontology"@en .
 
 
-###  https://abstractmachines.dev/wittgenstein/Dota2#Hero
-:Hero rdf:type owl:Class ;
-      rdfs:subClassOf :DotaThing .
-
-
-###  https://abstractmachines.dev/wittgenstein/Dota2#HeroAbility
-:HeroAbility rdf:type owl:Class ;
-             rdfs:subClassOf :HeroDescriptor .
-
-
-###  https://abstractmachines.dev/wittgenstein/Dota2#HeroDescriptor
-:HeroDescriptor rdf:type owl:Class ;
-                rdfs:subClassOf :DotaThing ;
-                rdfs:comment "Something that describes a hero. This could be the Hero's base movement speed, a collection of its abilities, or its preferred role."@en .
-
-
-###  https://abstractmachines.dev/wittgenstein/Dota2#HeroMainAttribute
-:HeroMainAttribute rdf:type owl:Class ;
-                   owl:equivalentClass [ rdf:type owl:Class ;
-                                         owl:oneOf ( :Agility
-                                                     :Intelligence
-                                                     :Strength
-                                                   )
-                                       ] ;
-                   rdfs:subClassOf :HeroDescriptor .
-
-
-###  https://abstractmachines.dev/wittgenstein/Dota2#HeroStats
-:HeroStats rdf:type owl:Class ;
-           rdfs:subClassOf :HeroDescriptor .
-
-
-###  https://abstractmachines.dev/wittgenstein/Dota2#InstantAbility
-:InstantAbility rdf:type owl:Class ;
-                rdfs:subClassOf :Ability .
-
-
-###  https://abstractmachines.dev/wittgenstein/Dota2#MixedTarget
-:MixedTarget rdf:type owl:Class ;
-             rdfs:subClassOf :TargetingType ;
-             owl:disjointUnionOf ( :PointOrUnitTarget
-                                   :UnitWithAreaTarget
-                                 ) .
-
-
-###  https://abstractmachines.dev/wittgenstein/Dota2#NoTarget
-:NoTarget rdf:type owl:Class ;
-          rdfs:subClassOf :TargetingType .
-
-
-###  https://abstractmachines.dev/wittgenstein/Dota2#PointOrUnitTarget
-:PointOrUnitTarget rdf:type owl:Class ;
-                   rdfs:subClassOf :MixedTarget .
-
-
-###  https://abstractmachines.dev/wittgenstein/Dota2#PointTarget
-:PointTarget rdf:type owl:Class ;
-             rdfs:subClassOf :TargetingType ;
-             owl:disjointUnionOf ( :AreaTarget
-                                   :VectorTarget
-                                 ) .
-
-
 ###  https://abstractmachines.dev/wittgenstein/Dota2#TargetingType
 :TargetingType rdf:type owl:Class ;
-               rdfs:subClassOf :AbilityDescriptor ;
-               owl:disjointUnionOf ( :MixedTarget
-                                     :NoTarget
-                                     :PointTarget
-                                     :UnitTarget
-                                   ) .
-
-
-###  https://abstractmachines.dev/wittgenstein/Dota2#UnitTarget
-:UnitTarget rdf:type owl:Class ;
-            rdfs:subClassOf :TargetingType .
-
-
-###  https://abstractmachines.dev/wittgenstein/Dota2#UnitWithAreaTarget
-:UnitWithAreaTarget rdf:type owl:Class ;
-                    rdfs:subClassOf :MixedTarget .
-
-
-###  https://abstractmachines.dev/wittgenstein/Dota2#VectorTarget
-:VectorTarget rdf:type owl:Class ;
-              rdfs:subClassOf :PointTarget .
+               owl:equivalentClass [ rdf:type owl:Class ;
+                                     owl:oneOf ( :UnitTarget
+                                               )
+                                   ] ;
+               rdfs:subClassOf :DotaThing .
 
 
 #################################################################
 #    Individuals
 #################################################################
 
-###  https://abstractmachines.dev/wittgenstein/Dota2#ActiveAbility
-:ActiveAbility rdf:type owl:NamedIndividual ,
-                        :ActivationType .
-
-
-###  https://abstractmachines.dev/wittgenstein/Dota2#Agility
-:Agility rdf:type owl:NamedIndividual ,
-                  :HeroMainAttribute .
-
-
-###  https://abstractmachines.dev/wittgenstein/Dota2#AutocastAbility
-:AutocastAbility rdf:type owl:NamedIndividual ,
-                          :ActivationType .
-
-
 ###  https://abstractmachines.dev/wittgenstein/Dota2#Channeled
 :Channeled rdf:type owl:NamedIndividual ,
                     :CastingType .
 
 
-###  https://abstractmachines.dev/wittgenstein/Dota2#Instant
-:Instant rdf:type owl:NamedIndividual ,
-                  :CastingType .
-
-
-###  https://abstractmachines.dev/wittgenstein/Dota2#Intelligence
-:Intelligence rdf:type owl:NamedIndividual ,
-                       :HeroMainAttribute .
-
-
 ###  https://abstractmachines.dev/wittgenstein/Dota2#LifeDrain
 :LifeDrain rdf:type owl:NamedIndividual ;
+           :castingType :Channeled ;
+           :damageType :MagicalDamage ;
+           :targetingType :UnitTarget ;
            :castRange "700"^^xsd:positiveInteger ;
-           :channelingTime "10"^^xsd:positiveInteger .
+           :linkBreakDistance "900"^^xsd:positiveInteger ;
+           :maximumChannelingTime "10"^^xsd:positiveInteger ;
+           rdfs:comment """When cast on an enemy, Pugna drains health from the target enemy unit to heal himself and granting vision over the target. If Pugna has full HP, and the enemy target is a Hero, Life Drain will restore mana instead.
+
+When cast on an ally, Pugna will drain his own health into his ally."""@en ;
+           rdfs:label "Life Drain"@en .
 
 
-###  https://abstractmachines.dev/wittgenstein/Dota2#PassiveAbility
-:PassiveAbility rdf:type owl:NamedIndividual ,
-                         :ActivationType .
+###  https://abstractmachines.dev/wittgenstein/Dota2#MagicalDamage
+:MagicalDamage rdf:type owl:NamedIndividual ,
+                        :DamageType .
 
 
-###  https://abstractmachines.dev/wittgenstein/Dota2#Pugna
-:Pugna rdf:type owl:NamedIndividual ;
-       :mainAttribute :Intelligence ;
-       :baseMovementSpeed "330"^^xsd:positiveInteger .
-
-
-###  https://abstractmachines.dev/wittgenstein/Dota2#Strength
-:Strength rdf:type owl:NamedIndividual ,
-                   :HeroMainAttribute .
-
-
-###  https://abstractmachines.dev/wittgenstein/Dota2#TreantProtector
-:TreantProtector rdf:type owl:NamedIndividual ;
-                 :mainAttribute :Strength .
+###  https://abstractmachines.dev/wittgenstein/Dota2#UnitTarget
+:UnitTarget rdf:type owl:NamedIndividual ,
+                     :TargetingType .
 
 
 ###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
